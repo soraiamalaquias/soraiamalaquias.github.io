@@ -23,13 +23,72 @@
 	</style>
 </head>
 <body>
-<div class="fullscreen-bg">
+<!--<div class="fullscreen-bg">
 	<video  muted autoplay poster="underconstruction.jpg" class="fullscreen-bg__video">
 		<source src="underconstruction_soraia.mp4" type="video/mp4">
 		<source src="underconstruction.webm" type="video/webm">
 	</video>
-</div>
+</div>-->
 
+<a href="#" id="link">play</a>
+<div id="player"></div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        
+        // Load API asynchronously.
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: 'GKAJBC6c1GM',
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            }); // create the <iframe> (and YouTube player)
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        function onPlayerStateChange(event) {    
+            if(event.data === 0) {          
+                hideVideo();
+            }
+        }
+
+        function hideVideo() {
+            var img_url = 'https://www.google.com/images/srpr/logo4w.png';
+            $('#player').replaceWith('<img src="'+img_url+'">');
+        }
+
+        $("#link").click(function(){
+            $('#player').show(); // show player
+            player.playVideo(); // begin playback
+        });
+
+        /* $(document).ready(function(){
+    $('video').on('ended',function(){
+      console.log('Video has ended!');
+    });
+  });
+        var videoLock = false;
+
+        $('video').on("timeupdate", function() {
+
+        if ($('video')[0].currentTime >= 7 && videoLock == false) {
+        videoLock = true;
+        $('body').append('<h1>Added After 7 Seconds Playing Video</h1>');
+        }
+
+        })*/
+    </script>
 </body>
 </html>
